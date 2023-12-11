@@ -40,6 +40,8 @@ int find_max_clique(vector<vector<int>> graph, int numVertices){
     for (int k = numVertices-1; k >= 0; k--){
         vector<int> local_clique;
         vector<int> candidates(vertices);
+
+        // Coloca o k como último vértice para que o clique comece a partir dele
         int vertice_test = candidates[k];
         candidates.erase(candidates.begin()+k);
         candidates.push_back(vertice_test);

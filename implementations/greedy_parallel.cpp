@@ -38,12 +38,14 @@ int find_max_clique(vector<vector<int>> graph, int num_vertices){
     vector<int> max_clique;
     
     // Testa de maneira paralela todos os vértices verificando se pode ser acrescentado
-    // no clique, sendo o primeiro vértice o que possui maior degree no grafo e 
+    // no clique, sendo o primeiro e segundo vértices o que possuirem o maior degree no grafo e 
     // os seguintes de maneira aleatória 
     #pragma omp parallel for default(none) shared(max_clique) firstprivate(vertices, graph, num_vertices) schedule(dynamic)
     for (int k = num_vertices-1; k >= 0; k--){
         vector<int> local_clique;
         vector<int> candidates(vertices);
+
+        // Coloca o k como último vértice para que o clique comece a partir dele
         int vertice_test = candidates[k];
         candidates.erase(candidates.begin()+k);
         candidates.push_back(vertice_test);
@@ -79,7 +81,7 @@ int find_max_clique(vector<vector<int>> graph, int num_vertices){
                 }
 
                 // Somente embaralha os vértices se o clique local tiver mais de dois vértices
-                // para fazer uso da huristica gulosa e aleatoriedade
+                // para fazer uso da heuristica gulosa e aleatoriedade
                 if (local_clique.size()>2){
                     random_device rd;
                     mt19937 gerador(rd());
